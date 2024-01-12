@@ -8,6 +8,9 @@ Océane aussi en est une, et oui ! :)
 ### Files
 
 Les fichiers suivent la norme Camel Case, exemple: `monFichier.js`
+
+Si les fichiers contiennent et exportent une class alors c'est la norme Pascal Case qui s'applique: `MonFichier.js`
+
 Les dossiers suivent la norme Kebab Case, exemple `mon-dossier`
 
 ### Branch
@@ -16,17 +19,26 @@ Les branches sont nommés à partir de leur tâche associé, prenons comme exemp
 la branche associé sera alors `F5-create_interface`.
 Les branches créées doivent **SYSTÉMATIQUEMENT** se baser sur la branche `develop`.
 
-### Controllers
+### MVC
+
+Pour un objet donné les classes devront s'appeler en fonction de son rôle, avec pour exemple la classe `Ant`:
+- AntModel.model.js
+- AntView.view.js
+- AntController.controller.js
+
+ps: je sais que tu trouves pas beau la répétition dans "Ant**Model**.**model**.js mais sinon le fichier s'appelerait `Ant` partout et ça poserait des soucis de conflit
+
+#### Controllers
 
 Les controlleurs sont dans le dossier `src/controllers` et doivent
 se nommer d'après la norme suivante `NomDuController.controller.js`
 
-### Views
+#### Views
 
 Les vues sont dans le dossier `src/views` et doivent
 se nommer d'après la norme suivante `NomDeLaView.view.js`
 
-### Models
+#### Models
 
 Les modèles sont dans le dossier `src/models` et doivent
 se nommer d'après la norme suivante `NomDuModele.model.js`
