@@ -1,13 +1,10 @@
 class StaticElementsModel{
 
-    constructor(positionX = 0, positionY = 0, hasCollidingBox = false) {
+    constructor(map = null, positionX = 0, positionY = 0, hasCollidingBox = false) {
+        this.map = map;
         this.positionX = positionX;
         this.positionY = positionY;
-        this.hasCollindingBox = hasCollidingBox;
-    }
-
-    touch(element){
-        //vérifier la collision avec l'object
+        this.hasCollidingBox = hasCollidingBox;
     }
 
 }
