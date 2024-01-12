@@ -13,7 +13,8 @@ Les dossiers suivent la norme Kebab Case, exemple `mon-dossier`
 ### Branch
 
 Les branches sont nommés à partir de leur tâche associé, prenons comme exemple la tâche "F5 - Création de l'interface de contrôle",
-la branche associé sera alors `F5-create_interface`
+la branche associé sera alors `F5-create_interface`.
+Les branches créées doivent **SYSTÉMATIQUEMENT** se baser sur la branche `develop`.
 
 ### Controllers
 
