@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    padding: 15px 30px;
+    width: 200px;
+    font-size: 200%;
+    border: 1px solid black;
+    background-color: transparent;
+    border-radius: 3px;
+    margin-right: 100px;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+canvas{
+    border: 1px solid red;
+}
