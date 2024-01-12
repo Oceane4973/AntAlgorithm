@@ -5,6 +5,16 @@ Océane aussi en est une, et oui ! :)
 
 ## Norme de nommage
 
+### Files
+
+Les fichiers suivent la norme Camel Case, exemple: `monFichier.js`
+Les dossiers suivent la norme Kebab Case, exemple `mon-dossier`
+
+### Branch
+
+Les branches sont nommés à partir de leur tâche associé, prenons comme exemple la tâche "F5 - Création de l'interface de contrôle",
+la branche associé sera alors `F5-create_interface`
+
 ### Controllers
 
 Les controlleurs sont dans le dossier `src/controllers` et doivent
