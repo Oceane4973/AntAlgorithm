@@ -22,10 +22,15 @@ Pour chaque élément du MVC il faut le mettre dans son dossier attitré, exempl
 
 ### Branch
 
+La zone d'en dessous c'est comment on faisait avant mais en vrai ça n'a aucun sens de faire 1 branche par tâche, je pense que le mieux c'est de faire 1 branche par fonctionnalité non ?
+
+```
+
 Les branches sont nommés à partir de l'élément associé, prenons comme exemple la tâche "F5 - Création de l'interface de contrôle",
 la branche associé sera alors `interface`. 
 
 Autre exemple: la tâche "F17 - créer le controlleur de la fourmis" sera alors `ant_controller`.
+```
 
 Les branches créées doivent **SYSTÉMATIQUEMENT** se baser sur la branche `develop`.
 
