@@ -10,6 +10,7 @@ Océane aussi en est une, et oui ! :)
 Les fichiers suivent la norme Camel Case, exemple: `monFichier.js`
 
 Si les fichiers contiennent et exportent une class alors c'est la norme Pascal Case qui s'applique: `MonFichier.js`
+
 (en gros, si ton fichier exporte une classe tu mets les majuscules sinon non)
 
 Les dossiers suivent la norme Kebab Case, exemple `mon-dossier`
