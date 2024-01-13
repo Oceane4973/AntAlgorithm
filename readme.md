@@ -10,13 +10,17 @@ Océane aussi en est une, et oui ! :)
 Les fichiers suivent la norme Camel Case, exemple: `monFichier.js`
 
 Si les fichiers contiennent et exportent une class alors c'est la norme Pascal Case qui s'applique: `MonFichier.js`
+(en gros, si ton fichier exporte une classe tu mets les majuscules sinon non)
 
 Les dossiers suivent la norme Kebab Case, exemple `mon-dossier`
 
 ### Branch
 
-Les branches sont nommés à partir de leur tâche associé, prenons comme exemple la tâche "F5 - Création de l'interface de contrôle",
-la branche associé sera alors `F5-create_interface`.
+Les branches sont nommés à partir de l'élément associé, prenons comme exemple la tâche "F5 - Création de l'interface de contrôle",
+la branche associé sera alors `interface`. 
+
+Autre exemple: la tâche "F17 - créer le controlleur de la fourmis" sera alors `ant_controller`.
+
 Les branches créées doivent **SYSTÉMATIQUEMENT** se baser sur la branche `develop`.
 
 ### MVC
