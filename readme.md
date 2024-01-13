@@ -13,7 +13,12 @@ Si les fichiers contiennent et exportent une class alors c'est la norme Pascal C
 
 (en gros, si ton fichier exporte une classe tu mets les majuscules sinon non)
 
+### Folders
+
 Les dossiers suivent la norme Kebab Case, exemple `mon-dossier`
+
+Pour chaque élément du MVC il faut le mettre dans son dossier attitré, exemple: pour le controlleur de Ant cela donnerait:
+`src/controllers/ant/AntController.controller.js`
 
 ### Branch
 
