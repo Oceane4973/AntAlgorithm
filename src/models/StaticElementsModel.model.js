@@ -1,7 +1,7 @@
 class StaticElementsModel {
 
-    constructor(map = null, positionX = 0, positionY = 0, hasCollidingBox = false) {
-        this.map = map;
+    constructor(canva = null, positionX = 0, positionY = 0, hasCollidingBox = false) {
+        this.canva = canva;
         this.positionX = positionX;
         this.positionY = positionY;
         this.hasCollidingBox = hasCollidingBox;
