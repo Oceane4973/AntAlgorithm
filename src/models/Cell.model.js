@@ -1,25 +1,23 @@
 
-class Canvas {
-    constructor(id, width, height) {
-        this.canvas = document.getElementById(id);
-        this.canvas.width = width;
-        this.canvas.height = height;
-
-        this.context = this.canvas.getContext("2d");
+class Cell {
+    constructor() {
+        this.src = "./src/assets/ant.png"
     }
 
-    generateMatrixBackground(){
-        this.matrix = [
-            
-
-        ]
+    loadImage() {
+        return new Promise((resolve, reject) => {
+            const img = new Image()
+            img.onload = () => resolve(img)
+            img.onerror = reject
+            img.src = this.src
+        })
     }
 
-    generateBackground(){
-
+    async display(canvas, x, y, cellSize) {
+        const context = canvas.getContext('2d')
+        const img = await this.loadImage()
+        context.drawImage(img, x * cellSize, y * cellSize, cellSize, cellSize)
     }
-
-
 }
 
-export default Canvas;
+export default Cell
