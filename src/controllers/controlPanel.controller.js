@@ -4,18 +4,19 @@ class controlPanel {
         this.clicked = 0;
         this.btn = document.querySelector("#control");
         this.setupListener();
-        console.log("here");
+        this.play = false;
     }
 
     setupListener(){
         this.btn.addEventListener('click', () => {
             this.clicked += 1;
+            this.play = this.clicked % 2 === 0;
             this.refresh();
         })
     }
 
     refresh(){
-        this.btn.textContent = this.clicked % 2 === 0 ? "Start" : "Pause";
+        this.btn.textContent = this.play ? "Start" : "Pause";
     }
 }
 
