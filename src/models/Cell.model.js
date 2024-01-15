@@ -1,4 +1,5 @@
 
+
 class Cell {
     constructor() {
         this.src = "./src/resources/assets/ant.png"
