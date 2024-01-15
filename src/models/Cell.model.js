@@ -1,7 +1,7 @@
 
 class Cell {
     constructor() {
-        this.src = "./src/assets/ant.png"
+        this.src = "./src/resources/assets/ant.png"
     }
 
     loadImage() {
