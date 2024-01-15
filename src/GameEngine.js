@@ -11,28 +11,39 @@ class GameEngine{
         this.direction = 0;
         this.timer = 0;
         this.elements = elements;
+        this.update = this.update.bind(this);
     }
 
-    update(){
+    async moveAndDisplayAsync(element) {
+        await element.controller.move(this.frameDuration);
+        await element.view.display();
+    }
+
+    async update(){
         let currentTime = Date.now();
+        console.log(this)
         let deltaTime   = currentTime - this.timeStart;
         this.lag += deltaTime;
         this.timeStart = currentTime;
         this.timer += deltaTime;
 
         while (this.lag >= this.frameDuration) {
-            this.elements.forEach(element => {
-                element.controller.move(this.frameDuration);
-                element.view.display();
-            })
+            // this.elements.forEach(element => {
+            //     element.controller.move(this.frameDuration);
+            //     element.view.display();
+            // })
+            // const moveAndDisplayPromises = this.elements.map(element => this.moveAndDisplayAsync(element));
+            // await Promise.all(moveAndDisplayPromises);
             // this.move(this.frameDuration);
             // this.display();
             this.lag -= this.frameDuration;
         }
 
-        if (this.position.x < 1) {
-            requestAnimationFrame(this.update);
-        }
+        // if (this.position.x < 1) {
+        //     requestAnimationFrame(this.update);
+        // }
     }
 
 }
+
+export default GameEngine;
