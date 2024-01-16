@@ -1,6 +1,6 @@
-import StaticElementsModel from "./StaticElementsModel.model";
+import StaticElements from "./StaticElements.model";
 
-class Food extends StaticElementsModel{
+class Food extends StaticElements {
 
     constructor(canva = null, positionX = 0, positionY = 0) {
         super(canva , positionX, positionY, false);

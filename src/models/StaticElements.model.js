@@ -1,4 +1,4 @@
-class StaticElementsModel {
+class StaticElements {
 
     constructor(canva = null, positionX = 0, positionY = 0, hasCollidingBox = false) {
         this.canva = canva;
@@ -9,4 +9,4 @@ class StaticElementsModel {
 
 }
 
-export default StaticElementsModel;
+export default StaticElements;
