@@ -22,13 +22,16 @@ class ControlPanel {
     refresh(){
         if(this.engine !== null && this.engine !== undefined){
             if(this.play){
+                this.engine.switchMode();
                 cancelAnimationFrame(this.animation);
             } else {
                 if(this.begin){
                     this.loop();
                     this.begin = false;
-                } else
+                } else {
                     this.animation = requestAnimationFrame(this.loop);
+                    this.engine.switchMode();
+                }
             }
         }
         this.btn.textContent = this.play ? "Start" : "Pause";
