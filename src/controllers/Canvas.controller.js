@@ -1,4 +1,5 @@
-import Map from './Map.controllers.js'
+import Map from './Map.controller.js'
+import Ants from './Ants.controller.js'
 
 class Canvas {
     constructor(id, width, height) {
@@ -12,6 +13,7 @@ class Canvas {
     
     async generateMap() {
         await this.map.generate()
+        this.ants = new Ants(this.canvas, this.map)
     }
 
     async refresh(){
@@ -19,6 +21,7 @@ class Canvas {
         await this.map.refresh()
 
         //ants
+        await this.ants.refresh()
     }
 }
 

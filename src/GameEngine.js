@@ -21,7 +21,7 @@ class GameEngine{
 
     async update(){
         let currentTime = Date.now();
-        console.log(this)
+        //console.log(this)
         let deltaTime   = currentTime - this.timeStart;
         this.lag += deltaTime;
         this.timeStart = currentTime;
