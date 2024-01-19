@@ -1,6 +1,6 @@
-import StaticElementsModel from "./StaticElementsModel.model";
+import Cell from './Cell.model.js'
 
-class ObstaclesModelModel extends StaticElementsModel{
+class ObstaclesModelModel extends Cell {
 
     constructor(canva = null, positionX = 0, positionY = 0) {
         super(canva , positionX, positionY, true);
