@@ -23,6 +23,7 @@ class GameEngine{
     }
 
     async update(){
+        let currentTime = Date.now();
         if(this.timer === 0){
             this.begin = new Date().getTime()/1000;
         }
