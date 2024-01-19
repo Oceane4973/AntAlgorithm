@@ -13,6 +13,13 @@ class Canvas {
     async generateMap() {
         await this.map.generate()
     }
+
+    async refresh(){
+        //map
+        await this.map.refresh()
+
+        //ants
+    }
 }
 
 export default Canvas

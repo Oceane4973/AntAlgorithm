@@ -1,6 +1,6 @@
 class GameEngine{
 
-    constructor(elements) {
+    constructor(canvasController) {
         this.timeStart = Date.now();
         this.lag = 0;
         this.fps = 60;
@@ -10,13 +10,13 @@ class GameEngine{
         this.speed = 1;
         this.direction = 0;
         this.timer = 0;
-        this.elements = elements;
+        this.canvasController = canvasController;
         this.update = this.update.bind(this);
     }
 
     async moveAndDisplayAsync(element) {
-        await element.controller.move(this.frameDuration);
-        await element.view.display();
+        //await element.controller.move(this.frameDuration);
+        //await element.view.display();
     }
 
     async update(){
@@ -28,6 +28,7 @@ class GameEngine{
         this.timer += deltaTime;
 
         while (this.lag >= this.frameDuration) {
+            this.canvasController.refresh()
             // this.elements.forEach(element => {
             //     element.controller.move(this.frameDuration);
             //     element.view.display();

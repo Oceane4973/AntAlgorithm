@@ -5,15 +5,12 @@ import GameEngine from "./src/GameEngine.js";
 
 window.addEventListener('load', async function() {
 
-    const els = [1,2,3,4];
-
-    const engine = new GameEngine(els);
-    const control = new ControlPanel(engine);
-
-
     const screenHeight = window.innerHeight
     const canvasHeight = screenHeight * 0.9
 
     const canvasController = new Canvas("game", canvasHeight, canvasHeight)
     await canvasController.generateMap()
+
+    const engine = new GameEngine(canvasController);
+    const control = new ControlPanel(engine);
 })

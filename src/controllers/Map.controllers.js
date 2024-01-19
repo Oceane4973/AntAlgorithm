@@ -69,6 +69,10 @@ class Map {
     async generate() {
         await ImageLoader.instance.loadImages()
         this._generateRandomMatrix()
+        await this.refresh()
+    }
+
+    async refresh() {
         const cellSize = this.canvas.width / this.matrix[0].length;
 
         for (let y = 0; y < this.matrix.length; y++) {
