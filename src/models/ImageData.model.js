@@ -1,10 +1,11 @@
 
 class ImageData {
-    constructor(src, croppedValue, xRatio = 0, yRatio = 0) {
+    constructor(src, croppedValue=1, xRatio = 0, yRatio = 0, sizeRatio=1) {
         this.src = src
         this.croppedValue = croppedValue
         this.xRatio = xRatio
         this.yRatio = yRatio
+        this.sizeRatio = sizeRatio
         this.img = null
     }
 
