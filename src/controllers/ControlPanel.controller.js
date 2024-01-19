@@ -1,8 +1,8 @@
 class ControlPanel {
 
-    constructor(engine = null){
+    constructor(id, engine = null){
         this.clicked = 0;
-        this.btn = document.querySelector("#control");
+        this.btn = document.querySelector(id);
         this.setupListener();
         this.play = false;
         this.engine = engine;

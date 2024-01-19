@@ -1,4 +1,4 @@
-import Map from './Map.controllers.js'
+import Map from './Map.controller.js'
 
 class Canvas {
     constructor(id, width, height) {

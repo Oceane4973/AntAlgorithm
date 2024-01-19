@@ -9,7 +9,7 @@ class Cell {
 
      display(canvas, x, y, cellSize) {
         const context = canvas.getContext('2d')
-        if (this.type != CellType.FLOOR){
+        if (this.type !== CellType.FLOOR){
             const grassImg = ImageLoader.instance.images[CellType.FLOOR]
             const grassSquareSize = grassImg.img.width / grassImg.croppedValue
             const grassXPos = grassImg.img.width * grassImg.xRatio
