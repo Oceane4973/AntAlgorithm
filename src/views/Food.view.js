@@ -1,6 +1,6 @@
-import StaticElementsView from "./StaticElementsView.view";
+import StaticElements from "./StaticElements.view";
 
-class ObstaclesView extends StaticElementsView{
+class Food extends StaticElements {
 
     constructor(context = null, url = "", positionX = 0, positionY = 0) {
         super(context, url, positionX, positionY);
@@ -8,4 +8,4 @@ class ObstaclesView extends StaticElementsView{
 
 }
 
-export default ObstaclesView;
+export default Food;

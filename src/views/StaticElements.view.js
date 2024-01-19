@@ -1,4 +1,4 @@
-class StaticElementsView {
+class StaticElements {
 
     constructor(context = null, url = "", positionX = 0, positionY = 0) {
         this.ctx = context;
@@ -11,4 +11,4 @@ class StaticElementsView {
 
 }
 
-export default StaticElementsView;
+export default StaticElements;
