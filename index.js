@@ -12,5 +12,5 @@ window.addEventListener('load', async function() {
     await canvasController.generateMap()
 
     const engine = new GameEngine(canvasController);
-    const control = new ControlPanel(engine);
+    const control = new ControlPanel("#control", engine);
 })

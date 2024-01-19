@@ -1,8 +1,8 @@
 class ControlPanel {
 
-    constructor(engine = null){
+    constructor(id, engine = null){
         this.clicked = 0;
-        this.btn = document.querySelector("#control");
+        this.btn = document.querySelector(id);
         this.setupListener();
         this.play = false;
         this.engine = engine;
@@ -22,13 +22,16 @@ class ControlPanel {
     refresh(){
         if(this.engine !== null && this.engine !== undefined){
             if(this.play){
+                this.engine.switchMode();
                 cancelAnimationFrame(this.animation);
             } else {
                 if(this.begin){
                     this.loop();
                     this.begin = false;
-                } else
+                } else {
                     this.animation = requestAnimationFrame(this.loop);
+                    this.engine.switchMode();
+                }
             }
         }
         this.btn.textContent = this.play ? "Start" : "Pause";
