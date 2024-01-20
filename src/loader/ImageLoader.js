@@ -9,7 +9,7 @@ class ImageLoader {
             ImageLoader.instance = this
             ImageLoader.instance.images = {
                 FOOD : new ImageData("./src/resources/assets/foodAndColony.png",15, 0, 0.875, 0.8),
-                FLOOR : new ImageData("./src/resources/assets/grass.png",4),
+                FLOOR : new ImageData("./src/resources/assets/grass.png",4 ),
                 ANTHILL: new ImageData("./src/resources/assets/cellules.png",5, 0.39, 0.85, 0.6),
                 OBSTACLE : new ImageData("./src/resources/assets/foodAndColony.png",15, 0, 1.06, 1),
                 TREE : new ImageData("./src/resources/assets/tree.png",4, 0.03, 0.04 ),
