@@ -5,7 +5,7 @@ class Cell {
     constructor(type = CellType.TREE) {
         this.type = type
         this.image = ImageLoader.instance.images[type]
-        this.pheromones = (type == CellType.ANTHILL || type == CellType.FOOD) ? 1 : 0
+        this.pheromones = (type == CellType.FOOD) ? 1 : 0
         this.drawPheromoneCircle = false
     }
 
@@ -61,7 +61,7 @@ class Cell {
         }
     }
 
-    deposit_food_pheromone() {
+    depositFoodPheromone() {
         if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
             this.pheromones += Cell.foodPheromone;
         }

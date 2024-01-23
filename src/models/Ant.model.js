@@ -9,6 +9,7 @@ class Ant {
     { dx: 0, dy: 1 }, // Bas
     { dx: 0, dy: -1 } // Haut
   ];
+  static gamma = 0.01
 
   constructor(canvas, map, time = 1) {
     this.canvas = canvas;
@@ -23,15 +24,19 @@ class Ant {
     this.hasFindFood = false;
 
     this.nextCell = { x: this.map.anthillX, y: this.map.anthillY };
+    this.oldCell = null
     this.updatePosition(this.map.anthillX, this.map.anthillY);
   }
 
   updatePosition(x, y) {
+    if (this.xCell && this.yCell){
+        this.oldCell = { x: this.xCell, y: this.yCell };
+    }
     [this.xCell, this.yCell, this.xAnt, this.yAnt] = [x, y, x * this.cellSize, y * this.cellSize];
     this.visited[x][y] = true;
   }
 
-  findShortestPathToAnthill = () => {
+  findShortestPathToAnthill(){
     const priorityQueue = [{ x: this.xCell, y: this.yCell, distance: 0, path: [] }];
     const visitedCells = new Set();
 
@@ -59,7 +64,7 @@ class Ant {
     return null;
   };
 
-  _move = () => {
+  _move(){
     if (this.movementTime === this.time) {
       if (this.hasFindFood) {
         this.pathToAnthill = (!this.pathToAnthill || !this.pathToAnthill.length) ? this.findShortestPathToAnthill()?.reverse() || [] : this.pathToAnthill;
@@ -69,7 +74,7 @@ class Ant {
             this.pathToAnthill = undefined;
             this.nextCell = { x: this.map.anthillX, y: this.map.anthillY }
         } else {
-            this.map.matrixCell[this.nextCell.x][this.nextCell.y].deposit_food_pheromone()
+            this.map.matrixCell[this.nextCell.x][this.nextCell.y].depositFoodPheromone()
         }
       } else {
         this.nextCell = this.getAdjacentCells();
@@ -84,7 +89,7 @@ class Ant {
     }
   };
 
-  display = () => {
+  display(){
     const { img, croppedValue, xRatio, yRatio, sizeRatio } = this.image;
     const squareSize = img.width / croppedValue;
     const [xPos, yPos, size] = [img.width * xRatio, img.width * yRatio, this.cellSize * sizeRatio];
@@ -93,28 +98,55 @@ class Ant {
     this._move();
   };
 
-  getAdjacentCells = () => {
-    const [adjacentCells, adjacentCellsVisited] = [[], []];
+    getAdjacentCells(){
+        let targets = []
 
-    for (const { dx, dy } of Ant.directions) {
-      const [nextCellX, nextCellY] = [this.xCell + dx, this.yCell + dy];
+        for (const { dx, dy } of Ant.directions) {
+            const [nextCellX, nextCellY] = [this.xCell + dx, this.yCell + dy];
 
-      if (this.map.matrix[nextCellX][nextCellY] === CellType.FOOD) {
-        this.hasFindFood = true;
-        return { x: nextCellX, y: nextCellY };
-      }
+            if (this.map.matrix[nextCellX][nextCellY] === CellType.FOOD) {
+                this.hasFindFood = true;
+                return { x: nextCellX, y: nextCellY };
+            }
 
-      if (this.isValidCell(nextCellX, nextCellY)) {
-        const targetArray = this.visited[nextCellX][nextCellY] ? adjacentCellsVisited : adjacentCells;
-        targetArray.push({ x: nextCellX, y: nextCellY });
-      }
-    }
+            if (this.isValidCell(nextCellX, nextCellY)) {
+                targets.push({ x: nextCellX, y: nextCellY, isVisited : this.visited[nextCellX][nextCellY]});
+            }
+        }
 
-    return (adjacentCells.length > 0 ? adjacentCells : adjacentCellsVisited)[Math.floor(Math.random() * (adjacentCells.length > 0 ? adjacentCells : adjacentCellsVisited).length)];
+        if (targets.length == 1){
+            return targets[0]
+        }
+
+        targets = targets.filter(target => !(target.x == this.oldCell.x && target.y == this.oldCell.y));
+
+        let prob = Math.floor(Math.random() * 100)/100
+        let probability = []
+        let total = 0
+        for (let target of targets){
+            let pheromones = this.map.matrixCell[target.x][target.y].pheromones + Ant.gamma
+            probability.push(pheromones)
+            total += pheromones
+        }
+
+        if (total < Ant.gamma*5){
+            let newTarget = targets.find(target => !target.isVisited);
+            if (newTarget){
+                return newTarget
+            }
+        }
+
+        let cumul = 0
+        for (let i=0; i< targets.length; i++){
+            cumul += (probability[i] / total)
+            if (cumul >= prob){
+                return targets[i]
+            }
+        }
   };
 
   isValidCell = (x, y) => x >= 0 && x < this.map.matrixLength && y >= 0 && y < this.map.matrixLength &&
-                            (this.map.matrix[x][y] === CellType.FLOOR || this.map.matrix[x][y] === CellType.ANTHILL);
+   (this.map.matrix[x][y] === CellType.FLOOR || this.map.matrix[x][y] === CellType.ANTHILL);
 }
 
 export default Ant;
