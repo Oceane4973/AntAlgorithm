@@ -78,7 +78,6 @@ class Map {
     }
 
     async refresh() {
-    this.matrixCell
         for (let y = 0; y < this.matrixCell.length; y++) {
             for (let x = 0; x < this.matrixCell[y].length; x++) {
                 this.matrixCell[y][x].display(this.canvas, x, y, this.cellSize)

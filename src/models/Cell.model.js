@@ -6,6 +6,7 @@ class Cell {
         this.type = type
         this.image = ImageLoader.instance.images[type]
         this.pheromones = (type == CellType.ANTHILL || type == CellType.FOOD) ? 1 : 0
+        this.drawPheromoneCircle = true
     }
 
     static evaporationRate = 0.01;
@@ -29,10 +30,22 @@ class Cell {
     }
 
     draw_pheromone(context, x, y, cellSize){
-        context.textAlign = "center"
-        context.fillStyle = `rgba( 50, 255, 0, ${this.pheromones})`;
-        context.font = "10px Arial";
-        context.fillText(this.pheromones.toFixed(2),(x * cellSize) + cellSize/2 , (y * cellSize) + cellSize/2);
+        if (this.drawPheromoneCircle){
+            const circleSize = this.pheromones * cellSize * 0.2;
+            const circleX = x * cellSize + cellSize / 2;
+            const circleY = y * cellSize + cellSize / 2;
+
+            context.beginPath();
+            context.arc(circleX, circleY, circleSize, 0, 2 * Math.PI);
+            context.fillStyle = `rgba(0, 255, 0, ${this.pheromones})`;
+            context.fill();
+            context.closePath();
+        } else {
+            context.textAlign = "center"
+            context.fillStyle = `rgba( 50, 255, 0, ${this.pheromones})`;
+            context.font = "10px Arial";
+            context.fillText(this.pheromones.toFixed(2),(x * cellSize) + cellSize/2 , (y * cellSize) + cellSize/2);
+        }
     }
 
      display(canvas, x, y, cellSize) {
