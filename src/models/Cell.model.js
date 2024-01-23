@@ -6,12 +6,11 @@ class Cell {
         this.type = type
         this.image = ImageLoader.instance.images[type]
         this.pheromones = (type == CellType.ANTHILL || type == CellType.FOOD) ? 1 : 0
-        this.drawPheromoneCircle = true
+        this.drawPheromoneCircle = false
     }
 
     static evaporationRate = 0.01;
-    static pheromoneDeposit = 0.05;
-    static foodPheromone = 0.2;
+    static foodPheromone = 0.3;
 
     draw_default_grass(context, x, y, cellSize){
          const grassImg = ImageLoader.instance.images[CellType.FLOOR]
@@ -65,12 +64,6 @@ class Cell {
     deposit_food_pheromone() {
         if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
             this.pheromones += Cell.foodPheromone;
-        }
-    }
-
-    deposit_pheromone() {
-        if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
-            this.pheromones += Cell.pheromoneDeposit;
         }
     }
 

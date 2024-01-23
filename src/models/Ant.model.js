@@ -73,7 +73,6 @@ class Ant {
         }
       } else {
         this.nextCell = this.getAdjacentCells();
-        this.map.matrixCell[this.nextCell.x][this.nextCell.y].deposit_pheromone()
       }
 
       this.movementTime = 0;
