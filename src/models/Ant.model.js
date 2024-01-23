@@ -65,12 +65,15 @@ class Ant {
         this.pathToAnthill = (!this.pathToAnthill || !this.pathToAnthill.length) ? this.findShortestPathToAnthill()?.reverse() || [] : this.pathToAnthill;
         this.nextCell = this.pathToAnthill.pop();
         if (!this.nextCell) {
-          this.hasFindFood = false;
-          this.pathToAnthill = undefined;
-          // Actions supplémentaires en cas d'arrivée à la fourmilière
+            this.hasFindFood = false;
+            this.pathToAnthill = undefined;
+            this.nextCell = { x: this.map.anthillX, y: this.map.anthillY }
+        } else {
+            this.map.matrixCell[this.nextCell.x][this.nextCell.y].deposit_food_pheromone()
         }
       } else {
         this.nextCell = this.getAdjacentCells();
+        this.map.matrixCell[this.nextCell.x][this.nextCell.y].deposit_pheromone()
       }
 
       this.movementTime = 0;

@@ -41,6 +41,7 @@ class Map {
         }
         map[this.anthillX][this.anthillY] = CellType.ANTHILL;
         this.matrix = map;
+        this.matrixCell = this.matrix.map(line => line.map(type => new Cell(type)));
     }
 
     _placeRandomElement( map, elementType, count) {
@@ -77,10 +78,10 @@ class Map {
     }
 
     async refresh() {
-        for (let y = 0; y < this.matrix.length; y++) {
-            for (let x = 0; x < this.matrix[y].length; x++) {
-                const cellType = this.matrix[y][x];
-                new Cell(cellType).display(this.canvas, x, y, this.cellSize)
+    this.matrixCell
+        for (let y = 0; y < this.matrixCell.length; y++) {
+            for (let x = 0; x < this.matrixCell[y].length; x++) {
+                this.matrixCell[y][x].display(this.canvas, x, y, this.cellSize)
             }
         }
     }

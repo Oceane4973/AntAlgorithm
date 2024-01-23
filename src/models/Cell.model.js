@@ -8,6 +8,10 @@ class Cell {
         this.pheromones = (type == CellType.ANTHILL || type == CellType.FOOD) ? 1 : 0
     }
 
+    static evaporationRate = 0.03;
+    static pheromoneDeposit = 0.05;
+    static foodPheromone = 0.2;
+
     draw_default_grass(context, x, y, cellSize){
          const grassImg = ImageLoader.instance.images[CellType.FLOOR]
          const grassSquareSize = grassImg.img.width / grassImg.croppedValue
@@ -26,9 +30,9 @@ class Cell {
 
     draw_pheromone(context, x, y, cellSize){
         context.textAlign = "center"
-        context.fillStyle = `rgb( ${255 - 255 * this.pheromones}, ${255 * this.pheromones},  ${255 * this.pheromones})`;
+        context.fillStyle = `rgba( 50, 255, 0, ${this.pheromones})`;
         context.font = "10px Arial";
-        context.fillText(this.pheromones.toString() ,(x * cellSize) + cellSize/2 , (y * cellSize) + cellSize/2);
+        context.fillText(this.pheromones.toFixed(2),(x * cellSize) + cellSize/2 , (y * cellSize) + cellSize/2);
     }
 
      display(canvas, x, y, cellSize) {
@@ -42,6 +46,18 @@ class Cell {
         if (this.type != CellType.OBSTACLE && this.type != CellType.TREE) {
             this.draw_pheromone(context, x, y, cellSize)
         }
+    }
+
+    deposit_food_pheromone() {
+        this.pheromones += Cell.foodPheromone;
+    }
+
+    deposit_pheromone() {
+        this.pheromones += Cell.pheromoneDeposit;
+    }
+
+    evaporate() {
+        this.pheromones *= (1 - evaporationRate);
     }
 }
 
