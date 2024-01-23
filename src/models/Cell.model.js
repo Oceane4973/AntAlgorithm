@@ -9,7 +9,7 @@ class Cell {
         this.drawPheromoneCircle = false
     }
 
-    static evaporationRate = 0.01;
+    static evaporationRate = 0.001;
     static foodPheromone = 0.3;
 
     draw_default_grass(context, x, y, cellSize){

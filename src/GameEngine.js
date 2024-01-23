@@ -3,7 +3,7 @@ class GameEngine{
     constructor(canvasController) {
         this.timeStart = Date.now();
         this.lag = 0;
-        this.fps = 5;
+        this.fps = 60;
         this.frameDuration = 1000 / this.fps;
         this.position = {x: 0, y:0};
         this.cellSize = 100;

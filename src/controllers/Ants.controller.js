@@ -5,7 +5,7 @@ class Ants {
     constructor(canvas = null, map = null) {
         this.canvas = canvas
         this.map = map
-        const number_ant = 10
+        const number_ant = 15
         this.ants =  Array.from({ length: number_ant }, () => new Ant(canvas, map));
     }
 
