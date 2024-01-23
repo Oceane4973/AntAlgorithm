@@ -8,7 +8,7 @@ class Cell {
         this.pheromones = (type == CellType.ANTHILL || type == CellType.FOOD) ? 1 : 0
     }
 
-    static evaporationRate = 0.03;
+    static evaporationRate = 0.01;
     static pheromoneDeposit = 0.05;
     static foodPheromone = 0.2;
 
@@ -45,19 +45,26 @@ class Cell {
 
         if (this.type != CellType.OBSTACLE && this.type != CellType.TREE) {
             this.draw_pheromone(context, x, y, cellSize)
+            this.evaporate()
         }
     }
 
     deposit_food_pheromone() {
-        this.pheromones += Cell.foodPheromone;
+        if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
+            this.pheromones += Cell.foodPheromone;
+        }
     }
 
     deposit_pheromone() {
-        this.pheromones += Cell.pheromoneDeposit;
+        if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
+            this.pheromones += Cell.pheromoneDeposit;
+        }
     }
 
     evaporate() {
-        this.pheromones *= (1 - evaporationRate);
+        if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
+            this.pheromones = Math.max(0, Math.min(1, this.pheromones * (1 - Cell.evaporationRate)));
+        }
     }
 }
 
