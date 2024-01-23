@@ -22,34 +22,34 @@ class GameEngine{
         //await element.view.display();
     }
 
-    async update(){
-        let currentTime = Date.now();
-        if(this.timer === 0){
-            this.begin = new Date().getTime()/1000;
-        }
-        // console.log(this)
-        let deltaTime   = currentTime - this.timeStart;
-        this.lag += deltaTime;
-        this.timeStart = currentTime;
-        this.timer += deltaTime;
-        this.clock();
+    update(){
+            let currentTime = Date.now();
+            if(this.timer === 0){
+                this.begin = new Date().getTime()/1000;
+            }
+            // console.log(this)
+            let deltaTime   = currentTime - this.timeStart;
+            this.lag += deltaTime;
+            this.timeStart = currentTime;
+            this.timer += deltaTime;
+            this.clock();
 
-        while (this.lag >= this.frameDuration) {
-            this.canvasController.refresh()
-            // this.elements.forEach(element => {
-            //     element.controller.move(this.frameDuration);
-            //     element.view.display();
-            // })
-            // const moveAndDisplayPromises = this.elements.map(element => this.moveAndDisplayAsync(element));
-            // await Promise.all(moveAndDisplayPromises);
-            // this.move(this.frameDuration);
-            // this.display();
-            this.lag -= this.frameDuration;
-        }
-
-        // if (this.position.x < 1) {
-        //     requestAnimationFrame(this.update);
-        // }
+            while(this.lag >= this.frameDuration) {
+                this.canvasController.refresh()
+                // console.log(new Date().getTime()/1000)
+                // this.elements.forEach(element => {
+                //     element.controller.move(this.frameDuration);
+                //     element.view.display();
+                // })
+                // const moveAndDisplayPromises = this.elements.map(element => this.moveAndDisplayAsync(element));
+                // await Promise.all(moveAndDisplayPromises);
+                // this.move(this.frameDuration);
+                // this.display();
+                this.lag -= this.frameDuration;
+                if(this.pause){
+                    this.lag = 0;
+                }
+            }
     }
 
     clock(){
