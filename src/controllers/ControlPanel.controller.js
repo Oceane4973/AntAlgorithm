@@ -1,8 +1,10 @@
 class ControlPanel {
 
-    constructor(id, engine = null){
+    constructor(id_start, id_pheromones, engine = null){
         this.clicked = 0;
-        this.btn = document.querySelector(id);
+        this.btn = document.querySelector(id_start);
+        this.pheromones = document.querySelector(id_pheromones);
+        this.displayPheromones = false
         this.setupListener();
         this.play = false;
         this.engine = engine;
@@ -17,6 +19,11 @@ class ControlPanel {
             this.play = this.clicked % 2 === 0;
             this.refresh();
         })
+        this.pheromones.addEventListener('click', () => {
+            this.displayPheromones = !this.displayPheromones
+            this.engine.updatePheromonesView(this.displayPheromones)
+        })
+
     }
 
     refresh(){

@@ -85,6 +85,10 @@ class Map {
         }
     }
 
+    updatePheromonesView(display){
+        this.matrixCell.map(line => line.map(cell => cell.drawPheromoneCircle = display));
+    }
+
 }
 
 export default Map

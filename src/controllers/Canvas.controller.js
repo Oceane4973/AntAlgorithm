@@ -16,6 +16,10 @@ class Canvas {
         this.ants = new Ants(this.canvas, this.map)
     }
 
+    updatePheromonesView(display){
+        this.map.updatePheromonesView(display)
+    }
+
     async refresh(){
         //map
         await this.map.refresh()

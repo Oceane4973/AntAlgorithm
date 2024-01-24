@@ -22,6 +22,10 @@ class GameEngine{
         //await element.view.display();
     }
 
+    updatePheromonesView(display){
+        this.canvasController.updatePheromonesView(display)
+    }
+
     update(){
             let currentTime = Date.now();
             if(this.timer === 0){
