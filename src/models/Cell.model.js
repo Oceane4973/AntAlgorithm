@@ -2,12 +2,13 @@ import ImageLoader from '../loader/ImageLoader.js'
 
 class Cell {
 
-    constructor(type = CellType.TREE) {
+    constructor(type = CellType.TREE, mapController) {
         this.type = type
         this.image = ImageLoader.instance.images[type]
-        this.pheromones = (type == CellType.FOOD) ? 1 : 0
+        this.pheromones = 0
         this.drawPheromoneCircle = false
-        this.quantity = (type == CellType.FOOD) ? 1 : 0
+        this.quantity = 0
+        this.mapController = mapController
     }
 
     static evaporationRate = 0.001;
@@ -70,12 +71,20 @@ class Cell {
 
     getFood(){
         if (this.quantity != 0 && this.type == CellType.FOOD){
-            this.quantity -= 0.1
+            this.quantity -= 0.05
         }
+        console.log(this.quantity)
         if (this.quantity <= 0  && this.type == CellType.FOOD){
-            this.type = CellType.FLOOR
-            this.image = ImageLoader.instance.images[this.type]
+            this.setType(CellType.FLOOR)
+            this.mapController.placeRandomElement(CellType.FOOD, 1);
         }
+    }
+
+    setType(type){
+        this.type = type
+        this.image = ImageLoader.instance.images[this.type]
+        this.pheromones = (type == CellType.FOOD) ? 1 : 0
+        this.quantity = (type == CellType.FOOD) ? 1 : 0
     }
 
     evaporate() {
