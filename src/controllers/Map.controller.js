@@ -11,61 +11,60 @@ class Map {
     }
 
     _generateRandomMatrix() {
-        const map = [];
-
+        this.matrixCell = []
         for (let i = 0; i < this.matrixLength; i++) {
-            map[i] = [];
+            this.matrixCell[i] = [];
             for (let j = 0; j < this.matrixLength; j++) {
                 if (i === 0 || i === this.matrixLength - 1 || j === 0 || j === this.matrixLength - 1) {
-                    map[i][j] = CellType.TREE;
+                    this.matrixCell[i][j] = new Cell(CellType.TREE, this);
                 } else {
-                    map[i][j] = Math.random() < 0.4 ? CellType.TREE : CellType.FLOOR;
+                    this.matrixCell[i][j] = Math.random() < 0.4 ?  new Cell(CellType.TREE, this) :  new Cell(CellType.FLOOR, this);
                 }
             }
         }
 
-        this._placeRandomElement(map, CellType.OBSTACLE, 2);
-        this._placeRandomElement(map, CellType.FOOD, 2 + Math.floor(Math.random() * 2));
-        this._placeRandomElement(map, CellType.ANTHILL, 1);
 
-        for (let l = 0; l < map.length; l++) {
-            for (let m = 0; m < map[l].length; m++) {
-                if (map[l][m] === CellType.FOOD) {
+        this.placeRandomElement(CellType.OBSTACLE, 2);
+        this.placeRandomElement(CellType.FOOD, 3 + Math.floor(Math.random() * 2));
+        this.placeRandomElement(CellType.ANTHILL, 1);
+
+        for (let l = 0; l < this.matrixCell.length; l++) {
+            for (let m = 0; m < this.matrixCell[l].length; m++) {
+                if (this.matrixCell[l][m].type === CellType.FOOD) {
                     const start = [this.anthillX, this.anthillY];
                     const end = [l, m];
-                    this._connectCells(map, start, end);
-                    map[l][m] = CellType.FOOD
+                    this._connectCells(start, end);
+                    this.matrixCell[l][m].setType(CellType.FOOD)
                 }
             }
         }
-        map[this.anthillX][this.anthillY] = CellType.ANTHILL;
-        this.matrixCell = map.map(line => line.map(type => new Cell(type)));
+        this.matrixCell[this.anthillX][this.anthillY].setType(CellType.ANTHILL)
     }
 
-    _placeRandomElement( map, elementType, count) {
+    placeRandomElement(elementType, count) {
         for (let i = 0; i < count; i++) {
             let elementX, elementY;
             do {
                 elementX = Math.floor(Math.random() * (this.matrixLength - 2)) + 1;
                 elementY = Math.floor(Math.random() * (this.matrixLength - 2)) + 1;
-            } while (map[elementX][elementY] !== CellType.FLOOR);
+            } while (this.matrixCell[elementX][elementY].type !== CellType.FLOOR);
             if (elementType === CellType.ANTHILL) {
                 this.anthillX = elementX
                 this.anthillY = elementY
             }
-            map[elementX][elementY] = elementType;
+            this.matrixCell[elementX][elementY].setType(elementType);
         }
     }
 
-    _connectCells(map, start, end) {
+    _connectCells(start, end) {
         let [startX, startY] = start;
         const [endX, endY] = end;
 
         while (startX !== endX || startY !== endY) {
-            startX += (startX < endX) ? 1 : (startX > endX) ? -1 : 0;
-            map[startX][startY] = CellType.FLOOR;
-            startY += (startY < endY) ? 1 : (startY > endY) ? -1 : 0;
-            map[startX][startY] = CellType.FLOOR;
+             startX += (startX < endX) ? 1 : (startX > endX) ? -1 : 0;
+             this.matrixCell[startX][startY].setType(CellType.FLOOR);
+             startY += (startY < endY) ? 1 : (startY > endY) ? -1 : 0;
+             this.matrixCell[startX][startY].setType(CellType.FLOOR);
         }
     }
 
