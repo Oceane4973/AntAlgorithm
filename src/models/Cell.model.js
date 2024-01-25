@@ -7,6 +7,7 @@ class Cell {
         this.image = ImageLoader.instance.images[type]
         this.pheromones = (type == CellType.FOOD) ? 1 : 0
         this.drawPheromoneCircle = false
+        this.quantity = (type == CellType.FOOD) ? 1 : 0
     }
 
     static evaporationRate = 0.001;
@@ -64,6 +65,16 @@ class Cell {
     depositFoodPheromone() {
         if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
             this.pheromones += Cell.foodPheromone;
+        }
+    }
+
+    getFood(){
+        if (this.quantity != 0 && this.type == CellType.FOOD){
+            this.quantity -= 0.1
+        }
+        if (this.quantity <= 0  && this.type == CellType.FOOD){
+            this.type = CellType.FLOOR
+            this.image = ImageLoader.instance.images[this.type]
         }
     }
 

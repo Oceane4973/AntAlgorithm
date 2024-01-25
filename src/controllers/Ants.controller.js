@@ -5,13 +5,16 @@ class Ants {
     constructor(canvas = null, map = null) {
         this.canvas = canvas
         this.map = map
-        const number_ant = 15
-        this.ants =  Array.from({ length: number_ant }, () => new Ant(canvas, map));
+        this.maxAnts = 30
+        this.ants = [new Ant(canvas, map)]
     }
 
-    async refresh(){
+    async refresh(timer){
+        if (Math.random() <= 0.02 && this.ants.length < this.maxAnts && timer != null){
+            this.ants.push(new Ant(this.canvas, this.map))
+        }
         for (let ant of this.ants){
-            ant.display()
+            ant.display(!(timer==null))
         }
     }
 }

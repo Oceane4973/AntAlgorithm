@@ -25,9 +25,10 @@ class Ant {
     this.hasFindFood = false;
 
     // To display
-    this.currentCell = {x : this.map.anthillX, y : this.map.anthillY, isVisited : null, directions : null}
+    this.currentCell = {x : this.map.anthillX, y : this.map.anthillY, isVisited : null}
     this.nextCell = null
     this.oldCell = null
+    this.visited[this.map.anthillX][this.map.anthillY] = true
 
     this.xAnt = this.currentCell.x * this.map.cellSize
     this.yAnt = this.currentCell.y * this.map.cellSize
@@ -45,49 +46,50 @@ class Ant {
     this.visited[nextCell.x][nextCell.y] = true;
     }
 
-  findShortestPathToAnthill(){
-    const priorityQueue = [{ x: this.nextCell.x, y: this.nextCell.y, distance: 0, path: [] }];
-    const visitedCells = new Set();
+  findShortestPathToAnthill() {
+      const queue = [{ x: this.currentCell.x, y: this.currentCell.y, path: [] }];
+      const visitedCells = new Set();
 
-    while (priorityQueue.length > 0) {
-      priorityQueue.sort((a, b) => a.distance - b.distance);
-      const { x, y, distance, path } = priorityQueue.shift();
+      while (queue.length > 0) {
+          const { x, y, path } = queue.shift();
 
-      if (x === this.map.anthillX && y === this.map.anthillY) {
-        return path;
-      }
-
-      if (!visitedCells.has(`${x},${y}`)) {
-        visitedCells.add(`${x},${y}`);
-
-        for (const { dx, dy } of Ant.directions) {
-          const [nextX, nextY, nextDistance] = [x + dx, y + dy, distance + 1];
-
-          if (this.isValidCell(nextX, nextY) && this.visited[nextX][nextY]) {
-            priorityQueue.push({ x: nextX, y: nextY, distance: nextDistance, path: [...path, { x: nextX, y: nextY }] });
+          if (x === this.map.anthillX && y === this.map.anthillY) {
+              return path;
           }
-        }
-      }
-    }
 
-    return null;
-  };
+          if (!visitedCells.has(`${x},${y}`)) {
+              visitedCells.add(`${x},${y}`);
+
+
+              for (const { dx, dy } of Ant.directions) {
+                  const [nextX, nextY] = [x + dx, y + dy];
+
+                  if (this.isValidCell(nextX, nextY) && this.visited[nextX][nextY]) {
+                      queue.push({ x: nextX, y: nextY, path: [...path, { x: nextX, y: nextY }] });
+                  }
+              }
+          }
+      }
+
+      return null;
+  }
+
 
   _move(){
     if (this.movementTime === this.time) {
       if (this.hasFindFood) {
-        this.pathToAnthill = (!this.pathToAnthill || !this.pathToAnthill.length) ? this.findShortestPathToAnthill()?.reverse() || [] : this.pathToAnthill;
-        let next = this.pathToAnthill.pop();
-        if (!next) {
-            this.hasFindFood = false;
-            this.pathToAnthill = undefined;
-            next = {x : this.map.anthillX, y : this.map.anthillY}
-        } else {
-            this.map.matrixCell[this.nextCell.x][this.nextCell.y].depositFoodPheromone()
-        }
-        this.updateObjective(next)
+          this.pathToAnthill = (!this.pathToAnthill || !this.pathToAnthill.length) ? this.findShortestPathToAnthill()?.reverse() || [] : this.pathToAnthill;
+          if (this.pathToAnthill.length > 0) {
+              let next = this.pathToAnthill.pop();
+              this.map.matrixCell[this.nextCell.x][this.nextCell.y].depositFoodPheromone()
+              this.updateObjective(next)
+          } else {
+              this.hasFindFood = false;
+              this.pathToAnthill = undefined;
+              this.updateObjective({ x: this.map.anthillX, y: this.map.anthillY });
+          }
       } else {
-        this.updateObjective(this.getAdjacentCells())
+          this.updateObjective(this.getAdjacentCells())
       }
       this.movementTime = 0;
     }
@@ -99,8 +101,10 @@ class Ant {
     this.movementTime++;
   };
 
-  display(){
-    this._move();
+  display(move = true){
+    if (move){
+        this._move();
+    }
     const { img, croppedValue, xRatio, yRatio, sizeRatio } = this.image;
     const squareSize = img.width / croppedValue;
     const [xPos, yPos, size] = [img.width * xRatio, img.width * yRatio, this.map.cellSize * sizeRatio];
@@ -114,13 +118,14 @@ class Ant {
         for (const { dx, dy } of Ant.directions) {
             const [nextCellX, nextCellY] = [this.currentCell.x + dx, this.currentCell.y + dy];
 
-            if (this.map.matrix[nextCellX][nextCellY] === CellType.FOOD) {
+            if (this.map.matrixCell[nextCellX][nextCellY].type === CellType.FOOD) {
                 this.hasFindFood = true;
-                return { x: nextCellX, y: nextCellY, isVisited : false, directions: [dx, dy]};
+                this.map.matrixCell[nextCellX][nextCellY].getFood()
+                return { x: nextCellX, y: nextCellY, isVisited : false};
             }
 
             if (this.isValidCell(nextCellX, nextCellY)) {
-                targets.push({ x: nextCellX, y: nextCellY, isVisited : this.visited[nextCellX][nextCellY], directions: [dx, dy]});
+                targets.push({ x: nextCellX, y: nextCellY, isVisited : this.visited[nextCellX][nextCellY]});
             }
         }
 
@@ -142,9 +147,9 @@ class Ant {
         }
 
         if (total < Ant.gamma*5){
-            let newTarget = targets.find(target => !target.isVisited);
-            if (newTarget){
-                return newTarget
+            let newTargets = targets.filter(target => !target.isVisited);
+            if (newTargets.length > 0){
+                return newTargets[Math.floor(Math.random() * newTargets.length)];
             }
         }
 
@@ -158,7 +163,7 @@ class Ant {
   };
 
   isValidCell = (x, y) => x >= 0 && x < this.map.matrixLength && y >= 0 && y < this.map.matrixLength &&
-   (this.map.matrix[x][y] === CellType.FLOOR || this.map.matrix[x][y] === CellType.ANTHILL);
+   (this.map.matrixCell[x][y].type === CellType.FLOOR || this.map.matrixCell[x][y].type === CellType.ANTHILL);
 }
 
 export default Ant;

@@ -7,7 +7,6 @@ class Map {
     constructor(canvas = null, matrixLength=20) {
         this.canvas = canvas
         this.matrixLength = matrixLength
-
         this.cellSize = this.canvas.width / matrixLength;
     }
 
@@ -40,8 +39,7 @@ class Map {
             }
         }
         map[this.anthillX][this.anthillY] = CellType.ANTHILL;
-        this.matrix = map;
-        this.matrixCell = this.matrix.map(line => line.map(type => new Cell(type)));
+        this.matrixCell = map.map(line => line.map(type => new Cell(type)));
     }
 
     _placeRandomElement( map, elementType, count) {

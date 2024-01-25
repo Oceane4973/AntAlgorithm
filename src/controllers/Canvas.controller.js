@@ -20,12 +20,13 @@ class Canvas {
         this.map.updatePheromonesView(display)
     }
 
-    async refresh(){
+    async refresh(timer){
+
         //map
         await this.map.refresh()
 
         //ants
-        await this.ants.refresh()
+        await this.ants.refresh(timer)
     }
 }
 

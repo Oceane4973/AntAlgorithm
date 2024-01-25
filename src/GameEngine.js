@@ -24,6 +24,7 @@ class GameEngine{
 
     updatePheromonesView(display){
         this.canvasController.updatePheromonesView(display)
+        this.canvasController.refresh(null)
     }
 
     update(){
@@ -39,7 +40,7 @@ class GameEngine{
             this.clock();
 
             while(this.lag >= this.frameDuration) {
-                this.canvasController.refresh()
+                this.canvasController.refresh(this.timer)
                 // console.log(new Date().getTime()/1000)
                 // this.elements.forEach(element => {
                 //     element.controller.move(this.frameDuration);
