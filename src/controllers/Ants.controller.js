@@ -17,7 +17,7 @@ class Ants {
         for (let ant of this.ants){
             if(!(timer==null))
                 ant.model._move();
-            ant.view.display(ant.model.xAnt, ant.model.yAnt);
+            ant.view.display(ant.model.xAnt, ant.model.yAnt, ant.model.angle);
         }
     }
 }

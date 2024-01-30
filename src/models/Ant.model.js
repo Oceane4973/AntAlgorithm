@@ -32,6 +32,8 @@ class Ant {
 
         this.xAnt = this.currentCell.x * this.map.cellSize
         this.yAnt = this.currentCell.y * this.map.cellSize
+
+        this.angle
       }
 
   updatePosition() {
@@ -44,6 +46,14 @@ class Ant {
     this.nextCell = nextCell
     this.currentCell = nextCell
     this.visited[nextCell.x][nextCell.y] = true;
+
+    const dx = this.nextCell.x - this.oldCell.x;
+    const dy = this.nextCell.y - this.oldCell.y;
+
+    if (dx === 1 && dy === 0) this.angle = -90;
+    else if (dx === -1 && dy === 0) this.angle = 90;
+    else if (dx === 0 && dy === 1) this.angle = 180;
+    else this.angle = 0;
     }
 
   findShortestPathToAnthill() {
