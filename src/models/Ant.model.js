@@ -30,9 +30,8 @@ class Ant {
         this.oldCell = null
         this.visited[this.map.anthillX][this.map.anthillY] = true
 
-        this.xAnt = this.currentCell.x * this.map.cellSize
-        this.yAnt = this.currentCell.y * this.map.cellSize
-      }
+        this.angle = 0;
+  }
 
   updatePosition() {
     this.xAnt += this.map.cellSize / this.time * (this.nextCell.x - this.oldCell.x)
@@ -44,6 +43,14 @@ class Ant {
     this.nextCell = nextCell
     this.currentCell = nextCell
     this.visited[nextCell.x][nextCell.y] = true;
+
+    const dx = this.nextCell.x - this.oldCell.x;
+    const dy = this.nextCell.y - this.oldCell.y;
+
+    if (dx === 1 && dy === 0) this.angle = -90;
+    else if (dx === -1 && dy === 0) this.angle = 90;
+    else if (dx === 0 && dy === 1) this.angle = 180;
+    else this.angle = 0;
     }
 
   findShortestPathToAnthill() {
@@ -98,6 +105,22 @@ class Ant {
     }
     this.updatePosition();
     this.movementTime++;
+  };
+
+  display(move = true){
+    if (move){
+        this._move();
+    }
+    const { img, croppedValue, xRatio, yRatio, sizeRatio } = this.image;
+    const squareSize = img.width / croppedValue;
+    const [xPos, yPos, size] = [img.width * xRatio, img.width * yRatio, this.map.cellSize * sizeRatio];
+
+    const ctx = this.canvas.getContext('2d');
+    ctx.save();
+    ctx.translate(this.yAnt + size/2,  this.xAnt+ size/2);
+    ctx.rotate(this.angle*Math.PI/180);
+    ctx.drawImage(img, xPos, yPos, squareSize, squareSize, -size/2, -size/2, size, size);
+    ctx.restore();
   };
 
     getAdjacentCells(){
