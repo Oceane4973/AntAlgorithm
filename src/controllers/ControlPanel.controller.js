@@ -8,7 +8,6 @@ class ControlPanel {
         this.setupListener();
         this.play = false;
         this.engine = engine;
-        this.begin = false;
         this.animation = null;
         this.loop = this.loop.bind(this);
     }

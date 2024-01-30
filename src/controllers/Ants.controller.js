@@ -1,4 +1,5 @@
-import Ant from '../models/Ant.model.js'
+import {default as AntM} from '../models/Ant.model.js';
+import {default as AntV} from '../views/Ant.view.js';
 
 class Ants {
 
@@ -6,15 +7,17 @@ class Ants {
         this.canvas = canvas
         this.map = map
         this.maxAnts = 30
-        this.ants = [new Ant(canvas, map)]
+        this.ants = [{model: new AntM(canvas, map), view: new AntV(canvas, map.cellSize)}];
     }
 
     async refresh(timer){
         if (Math.random() <= 0.02 && this.ants.length < this.maxAnts && timer != null){
-            this.ants.push(new Ant(this.canvas, this.map))
+            this.ants.push({model: new AntM(this.canvas, this.map), view: new AntV(this.canvas, this.map.cellSize)})
         }
         for (let ant of this.ants){
-            ant.display(!(timer==null))
+            if(!(timer==null))
+                ant.model._move();
+            ant.view.display(ant.model.xAnt, ant.model.yAnt);
         }
     }
 }

@@ -1,4 +1,4 @@
-import { ImageData } from '../models/ImageData.model.js'
+import { ImageData } from './ImageData.js'
 
 class ImageLoader {
 

@@ -1,6 +1,8 @@
-import Cell from '../models/Cell.model.js'
 import ImageLoader from '../loader/ImageLoader.js'
 import { CellType } from '../models/Cell.model.js'
+import {default as CellM} from '../models/Cell.model.js';
+import {default as CellV} from '../views/Cell.view.js';
+import Cell from './Cell.controller.js';
 
 class Map {
 
@@ -16,10 +18,12 @@ class Map {
             this.matrixCell[i] = [];
             for (let j = 0; j < this.matrixLength; j++) {
                 if (i === 0 || i === this.matrixLength - 1 || j === 0 || j === this.matrixLength - 1) {
-                    this.matrixCell[i][j] = new Cell(CellType.TREE, this);
+                    this.matrixCell[i][j] = new Cell(new CellM(CellType.TREE), new CellV(CellType.TREE), this); //new Cell(CellType.TREE, this);
                 } else {
-                    this.matrixCell[i][j] = Math.random() < 0.4 ?  new Cell(CellType.TREE, this) :  new Cell(CellType.FLOOR, this);
+                    const model = Math.random() < 0.4 ?  new CellM(CellType.TREE) :  new CellM(CellType.FLOOR);
+                    this.matrixCell[i][j] = new Cell(model, new CellV(model.type), this);
                 }
+                this.matrixCell[i][j].model.controller = this.matrixCell[i][j];
             }
         }
 
@@ -30,15 +34,15 @@ class Map {
 
         for (let l = 0; l < this.matrixCell.length; l++) {
             for (let m = 0; m < this.matrixCell[l].length; m++) {
-                if (this.matrixCell[l][m].type === CellType.FOOD) {
+                if (this.matrixCell[l][m].model.type === CellType.FOOD) {
                     const start = [this.anthillX, this.anthillY];
                     const end = [l, m];
                     this._connectCells(start, end);
-                    this.matrixCell[l][m].setType(CellType.FOOD)
+                    this.update_type(this.matrixCell[l][m], CellType.FOOD);
                 }
             }
         }
-        this.matrixCell[this.anthillX][this.anthillY].setType(CellType.ANTHILL)
+        this.update_type(this.matrixCell[this.anthillX][this.anthillY], CellType.ANTHILL);
     }
 
     placeRandomElement(elementType, count) {
@@ -47,12 +51,12 @@ class Map {
             do {
                 elementX = Math.floor(Math.random() * (this.matrixLength - 2)) + 1;
                 elementY = Math.floor(Math.random() * (this.matrixLength - 2)) + 1;
-            } while (this.matrixCell[elementX][elementY].type !== CellType.FLOOR);
+            } while (this.matrixCell[elementX][elementY].model.type !== CellType.FLOOR);
             if (elementType === CellType.ANTHILL) {
                 this.anthillX = elementX
                 this.anthillY = elementY
             }
-            this.matrixCell[elementX][elementY].setType(elementType);
+            this.update_type(this.matrixCell[elementX][elementY], elementType);
         }
     }
 
@@ -62,10 +66,15 @@ class Map {
 
         while (startX !== endX || startY !== endY) {
              startX += (startX < endX) ? 1 : (startX > endX) ? -1 : 0;
-             this.matrixCell[startX][startY].setType(CellType.FLOOR);
+             this.update_type(this.matrixCell[startX][startY], CellType.FLOOR);
              startY += (startY < endY) ? 1 : (startY > endY) ? -1 : 0;
-             this.matrixCell[startX][startY].setType(CellType.FLOOR);
+             this.update_type(this.matrixCell[startX][startY], CellType.FLOOR);
         }
+    }
+
+    update_type(cell, type){
+        cell.model.setType(type);
+        cell.view.update_type(type)
     }
 
     async generate() {
@@ -83,7 +92,7 @@ class Map {
     }
 
     updatePheromonesView(display){
-        this.matrixCell.map(line => line.map(cell => cell.drawPheromoneCircle = display));
+        this.matrixCell.map(line => line.map(cell => cell.model.drawPheromoneCircle = display));
     }
 
 }

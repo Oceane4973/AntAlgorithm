@@ -1,38 +1,38 @@
 import ImageLoader from '../loader/ImageLoader.js';
-import { CellType } from '../models/Cell.model.js';
+import { CellType } from './Cell.model.js';
 
 class Ant {
-  static type = "ANT";
-  static directions = [
-    { dx: 1, dy: 0 },
-    { dx: -1, dy: 0 },
-    { dx: 0, dy: 1 },
-    { dx: 0, dy: -1 }
-  ];
-  static gamma = 0.01
+    static type = "ANT";
+    static directions = [
+        { dx: 1, dy: 0 },
+        { dx: -1, dy: 0 },
+        { dx: 0, dy: 1 },
+        { dx: 0, dy: -1 }
+    ];
+    static gamma = 0.01
 
-  constructor(canvas, map, time = 20) {
-    this.canvas = canvas;
-    this.map = map;
-    this.image = ImageLoader.instance.images[Ant.type];
-    this.visited = Array.from({ length: this.map.matrixLength }, () => Array(this.map.matrixLength).fill(false));
+      constructor(canvas, map, time = 20) {
+        this.canvas = canvas;
+        this.map = map;
 
-    // To move ant
-    this.time = time;
-    this.movementTime = 0;
+        this.visited = Array.from({ length: this.map.matrixLength }, () => Array(this.map.matrixLength).fill(false));
 
-    // To return
-    this.hasFindFood = false;
+        // To move ant
+        this.time = time;
+        this.movementTime = 0;
 
-    // To display
-    this.currentCell = {x : this.map.anthillX, y : this.map.anthillY, isVisited : null}
-    this.nextCell = null
-    this.oldCell = null
-    this.visited[this.map.anthillX][this.map.anthillY] = true
+        // To return
+        this.hasFindFood = false;
 
-    this.xAnt = this.currentCell.x * this.map.cellSize
-    this.yAnt = this.currentCell.y * this.map.cellSize
-  }
+        // To display
+        this.currentCell = {x : this.map.anthillX, y : this.map.anthillY, isVisited : null}
+        this.nextCell = null
+        this.oldCell = null
+        this.visited[this.map.anthillX][this.map.anthillY] = true
+
+        this.xAnt = this.currentCell.x * this.map.cellSize
+        this.yAnt = this.currentCell.y * this.map.cellSize
+      }
 
   updatePosition() {
     this.xAnt += this.map.cellSize / this.time * (this.nextCell.x - this.oldCell.x)
@@ -81,7 +81,7 @@ class Ant {
           this.pathToAnthill = (!this.pathToAnthill || !this.pathToAnthill.length) ? this.findShortestPathToAnthill()?.reverse() || [] : this.pathToAnthill;
           if (this.pathToAnthill.length > 0) {
               let next = this.pathToAnthill.pop();
-              this.map.matrixCell[this.nextCell.x][this.nextCell.y].depositFoodPheromone()
+              this.map.matrixCell[this.nextCell.x][this.nextCell.y].model.depositFoodPheromone()
               this.updateObjective(next)
           } else {
               this.hasFindFood = false;
@@ -101,26 +101,15 @@ class Ant {
     this.movementTime++;
   };
 
-  display(move = true){
-    if (move){
-        this._move();
-    }
-    const { img, croppedValue, xRatio, yRatio, sizeRatio } = this.image;
-    const squareSize = img.width / croppedValue;
-    const [xPos, yPos, size] = [img.width * xRatio, img.width * yRatio, this.map.cellSize * sizeRatio];
-
-    this.canvas.getContext('2d').drawImage(img, xPos, yPos, squareSize, squareSize, this.yAnt, this.xAnt, size, size);
-  };
-
     getAdjacentCells(){
         let targets = []
 
         for (const { dx, dy } of Ant.directions) {
             const [nextCellX, nextCellY] = [this.currentCell.x + dx, this.currentCell.y + dy];
 
-            if (this.map.matrixCell[nextCellX][nextCellY].type === CellType.FOOD) {
+            if (this.map.matrixCell[nextCellX][nextCellY].model.type === CellType.FOOD) {
                 this.hasFindFood = true;
-                this.map.matrixCell[nextCellX][nextCellY].getFood()
+                this.map.matrixCell[nextCellX][nextCellY].model.getFood();
                 return { x: nextCellX, y: nextCellY, isVisited : false};
             }
 
@@ -129,19 +118,19 @@ class Ant {
             }
         }
 
-        if (targets.length == 1){
+        if (targets.length === 1){
             return targets[0]
         }
 
         if (this.oldCell){
-            targets = targets.filter(target => !(target.x == this.oldCell.x && target.y == this.oldCell.y));
+            targets = targets.filter(target => !(target.x === this.oldCell.x && target.y === this.oldCell.y));
         }
 
         let prob = Math.floor(Math.random() * 100)/100
         let probability = []
         let total = 0
         for (let target of targets){
-            let pheromones = this.map.matrixCell[target.x][target.y].pheromones + Ant.gamma
+            let pheromones = this.map.matrixCell[target.x][target.y].model.pheromones + Ant.gamma
             probability.push(pheromones)
             total += pheromones
         }
@@ -163,7 +152,7 @@ class Ant {
   };
 
   isValidCell = (x, y) => x >= 0 && x < this.map.matrixLength && y >= 0 && y < this.map.matrixLength &&
-   (this.map.matrixCell[x][y].type === CellType.FLOOR || this.map.matrixCell[x][y].type === CellType.ANTHILL);
+   (this.map.matrixCell[x][y].model.type === CellType.FLOOR || this.map.matrixCell[x][y].model.type === CellType.ANTHILL);
 }
 
 export default Ant;
