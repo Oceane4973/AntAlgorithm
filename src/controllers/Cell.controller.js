@@ -5,6 +5,8 @@ class Cell{
         this.model = model;
         this.view = view;
         this.map = map;
+        this.sound = document.createElement("audio");
+        this.sound.src = "src/resources/sounds/pop.mp3";
     }
 
     display(canvas, x, y, cellSize) {
@@ -23,6 +25,7 @@ class Cell{
 
     placeRandom(){
         this.map.placeRandomElement(CellType.FOOD, 1);
+        this.sound.play();
     }
 }
 

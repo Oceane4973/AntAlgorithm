@@ -34,6 +34,8 @@ class Ant {
 
         this.xAnt = this.currentCell.x * this.map.cellSize
         this.yAnt = this.currentCell.y * this.map.cellSize
+          this.sound = document.createElement("audio");
+        this.sound.src = "src/resources/sounds/crunch.mp3";
       }
 
   updatePosition() {
@@ -134,6 +136,7 @@ class Ant {
 
             if (this.map.matrixCell[nextCellX][nextCellY].model.type === CellType.FOOD) {
                 this.hasFindFood = true;
+                this.sound.play();
                 this.map.matrixCell[nextCellX][nextCellY].model.getFood();
                 return { x: nextCellX, y: nextCellY, isVisited : false};
             }
