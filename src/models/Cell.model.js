@@ -89,7 +89,7 @@ class Cell {
 
     evaporate() {
         if (this.type != CellType.ANTHILL && this.type != CellType.FOOD) {
-            this.pheromones = Math.max(0, Math.min(1, this.pheromones * (1 - Cell.evaporationRate)));
+            this.pheromones = Math.max(0, this.pheromones * (1 - Cell.evaporationRate));
         }
     }
 }

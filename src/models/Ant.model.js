@@ -60,7 +60,6 @@ class Ant {
           if (!visitedCells.has(`${x},${y}`)) {
               visitedCells.add(`${x},${y}`);
 
-
               for (const { dx, dy } of Ant.directions) {
                   const [nextX, nextY] = [x + dx, y + dy];
 
