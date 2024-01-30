@@ -7,12 +7,17 @@ class Ant{
         this.cellSize = cellSize;
     }
 
-    display(x, y){
+    display(x, y, angle){
         const { img, croppedValue, xRatio, yRatio, sizeRatio } = this.image;
         const squareSize = img.width / croppedValue;
         const [xPos, yPos, size] = [img.width * xRatio, img.width * yRatio, this.cellSize * sizeRatio];
 
-        this.canvas.getContext('2d').drawImage(img, xPos, yPos, squareSize, squareSize, y, x, size, size);
+        const ctx = this.canvas.getContext('2d');
+            ctx.save();
+            ctx.translate(y + size/2,  x+ size/2);
+            ctx.rotate(angle*Math.PI/180);
+            ctx.drawImage(img, xPos, yPos, squareSize, squareSize, -size/2, -size/2, size, size);
+            ctx.restore();
     };
 }
 

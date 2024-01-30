@@ -31,7 +31,10 @@ class Ant {
         this.visited[this.map.anthillX][this.map.anthillY] = true
 
         this.angle = 0;
-  }
+
+        this.xAnt = this.currentCell.x * this.map.cellSize
+        this.yAnt = this.currentCell.y * this.map.cellSize
+      }
 
   updatePosition() {
     this.xAnt += this.map.cellSize / this.time * (this.nextCell.x - this.oldCell.x)
