@@ -1,4 +1,3 @@
-import ImageLoader from '../loader/ImageLoader.js';
 import { CellType } from './Cell.model.js';
 
 class Ant {

@@ -7,7 +7,6 @@ class Canvas {
         this.canvas.width = width
         this.canvas.height = height
 
-        this.context = this.canvas.getContext("2d")
         this.map = new Map(this.canvas)
     }
     

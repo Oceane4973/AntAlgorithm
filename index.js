@@ -12,7 +12,7 @@ window.addEventListener('load', async () => {
     await canvasController.generateMap()
 
     const engine = new GameEngine(canvasController);
-    const control = new ControlPanel("#control", "#pheromones", engine);
+    new ControlPanel("#control", "#pheromones", engine);
 })
 
 // quantité maximal sur une cellule / quantité max de la cellule la plus haute historiquement
