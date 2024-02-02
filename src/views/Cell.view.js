@@ -5,6 +5,7 @@ class Cell{
 
     constructor(type = CellType.TREE) {
         this.image = ImageLoader.instance.images[type]
+        this.drawPheromoneCircle = false;
     }
 
     draw_default_grass(context, x, y, cellSize){

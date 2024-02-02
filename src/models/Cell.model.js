@@ -6,7 +6,6 @@ class Cell {
         this.type = type;
         this.image = ImageLoader.instance.images[type];
         this.pheromones = 0;
-        this.drawPheromoneCircle = false;
         this.quantity = 0;
         this.controller = null;
     }

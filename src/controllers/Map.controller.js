@@ -92,7 +92,7 @@ class Map {
     }
 
     updatePheromonesView(display){
-        this.matrixCell.map(line => line.map(cell => cell.model.drawPheromoneCircle = display));
+        this.matrixCell.map(line => line.map(cell => cell.view.drawPheromoneCircle = display));
     }
 
 }
