@@ -1,7 +1,10 @@
 # Antman
 
-Oui je suis une fourmis
-Océane aussi en est une, et oui ! :)
+## Démarrer le projet
+
+
+Afin de démarrer le projet, le programme doit être hébergé sur un serveur ou ouvert via certaines extensions comme Live Server pour vs code. Ouvrir directement le fichier `index.html` ne marchera pas car
+les imports ne seront pas fonctionnel.
 
 ## Norme de nommage
 
