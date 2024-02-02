@@ -2,20 +2,24 @@ import ImageLoader from '../loader/ImageLoader.js'
 
 class Cell {
 
+    static maxPheromones = 0
+    static evaporationRate = 0.005;
+    static foodPheromone = 0.3;
+
     constructor(type = CellType.TREE) {
         this.type = type;
         this.image = ImageLoader.instance.images[type];
         this.pheromones = 0;
         this.quantity = 0;
         this.controller = null;
+        this.maxPheromones = this.pheromones
     }
-
-    static evaporationRate = 0.001;
-    static foodPheromone = 0.3;
 
     depositFoodPheromone() {
         if (this.type !== CellType.ANTHILL && this.type !== CellType.FOOD) {
             this.pheromones += Cell.foodPheromone;
+            this.maxPheromones = Math.max(this.maxPheromones, this.pheromones)
+            Cell.maxPheromones = Math.max(Cell.maxPheromones, this.pheromones)
         }
     }
 

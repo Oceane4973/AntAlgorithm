@@ -1,5 +1,6 @@
 import ImageLoader from "../loader/ImageLoader.js";
 import { CellType } from '../models/Cell.model.js';
+import { default as CellModel } from '../models/Cell.model.js';
 
 class Cell{
 
@@ -24,15 +25,15 @@ class Cell{
         context.drawImage( this.image.img, xPos, yPos, squareSize, squareSize, (x * cellSize) , (y * cellSize), objectSize, objectSize);
     }
 
-    draw_pheromone(context, x, y, cellSize, pheromones){
+    draw_pheromone(context, x, y, cellSize, pheromones, maxPheromones){
         if (this.drawPheromoneCircle){
-            const circleSize = pheromones * cellSize * 0.2;
+            const circleSize = (maxPheromones/CellModel.maxPheromones) * cellSize * 0.4;
             const circleX = x * cellSize + cellSize / 2;
             const circleY = y * cellSize + cellSize / 2;
 
             context.beginPath();
             context.arc(circleX, circleY, circleSize, 0, 2 * Math.PI);
-            context.fillStyle = `rgba(0, 255, 0, ${pheromones})`;
+            context.fillStyle = `rgba(0, 255, 0, ${maxPheromones})`;
             context.fill();
             context.closePath();
         } else {

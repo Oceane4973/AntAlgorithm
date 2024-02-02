@@ -1,6 +1,7 @@
 import { CellType } from '../models/Cell.model.js';
 
 class Cell{
+
     constructor(model = null, view = null, map = null) {
         this.model = model;
         this.view = view;
@@ -18,7 +19,7 @@ class Cell{
         }
 
         if (this.model.type !== CellType.OBSTACLE && this.model.type !== CellType.TREE) {
-            this.view.draw_pheromone(context, x, y, cellSize, this.model.pheromones);
+            this.view.draw_pheromone(context, x, y, cellSize, this.model.pheromones, this.model.maxPheromones);
             this.model.evaporate()
         }
     }
