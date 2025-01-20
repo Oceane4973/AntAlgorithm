@@ -1,4 +1,5 @@
-import Cell from '../models/Cell.model.js'
+import Map from './Map.controller.js'
+import Ants from './Ants.controller.js'
 
 class Canvas {
     constructor(id, width, height) {
@@ -6,22 +7,25 @@ class Canvas {
         this.canvas.width = width
         this.canvas.height = height
 
-        this.context = this.canvas.getContext("2d")
+        this.map = new Map(this.canvas)
+    }
+    
+    async generateMap() {
+        await this.map.generate()
+        this.ants = new Ants(this.canvas, this.map)
     }
 
-    generateMatrixBackground(){
-        //this.matrix = [] // Matrix with different cells
-        this.matrix = Array.from({ length: 12 }, () => Array(12).fill(new Cell()))
+    updatePheromonesView(display){
+        this.map.updatePheromonesView(display)
     }
 
-    generateBackground(){
-        const cellSize = this.canvas.width / this.matrix[0].length
+    async refresh(timer){
 
-        for (let y = 0; y < this.matrix.length; y++) {
-            for (let x = 0; x < this.matrix[y].length; x++) {
-                this.matrix[y][x].display(this.canvas, x, y, cellSize)
-            }
-        }
+        //map
+        await this.map.refresh()
+
+        //ants
+        await this.ants.refresh(timer)
     }
 }
 
