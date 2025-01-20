@@ -18,9 +18,13 @@ class Cell{
             this.view.draw_image(context, x, y, cellSize)
         }
 
-        if (this.model.type !== CellType.OBSTACLE && this.model.type !== CellType.TREE) {
+        if (this.model.type !== CellType.OBSTACLE && this.model.type !== CellType.TREE && this.model.type !== CellType.FOOD /*&& this.model.pheromones > 0.01*/) {
             this.view.draw_pheromone(context, x, y, cellSize, this.model.pheromones, this.model.maxPheromones);
             this.model.evaporate()
+        }
+
+        if (this.model.type == CellType.FOOD && this.model.quantity > 0) {
+            this.view.draw_pheromone(context, x, y, cellSize, this.model.quantity, this.model.maxPheromones, `rgb(0, 0, 0)`);
         }
     }
 

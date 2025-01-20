@@ -8,7 +8,7 @@ class ImageLoader {
         if (!ImageLoader.instance) {
             ImageLoader.instance = this
             ImageLoader.instance.images = {
-                FOOD : new ImageData("./src/resources/assets/foodAndColony.png",15, 0, 0.875, 0.8),
+                FOOD : new ImageData("./src/resources/assets/foodAndColony.png",15, 0, 0.882, 1.1),
                 FLOOR : new ImageData("./src/resources/assets/grass.png",4 ),
                 ANTHILL: new ImageData("./src/resources/assets/cellules.png",5, 0.4, 0.73, 0.6),
                 OBSTACLE : new ImageData("./src/resources/assets/foodAndColony.png",15, 0, 1.06, 1),

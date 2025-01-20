@@ -28,6 +28,8 @@ class Cell {
             this.quantity -= 0.05
         }
         if (this.quantity <= 0  && this.type === CellType.FOOD){
+            this.pheromones = 0;
+            this.quantity = 0;
             this.setType(CellType.FLOOR);
             this.controller.placeRandom();
         }

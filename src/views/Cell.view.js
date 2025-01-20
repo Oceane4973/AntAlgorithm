@@ -25,8 +25,8 @@ class Cell{
         context.drawImage( this.image.img, xPos, yPos, squareSize, squareSize, (x * cellSize) , (y * cellSize), objectSize, objectSize);
     }
 
-    draw_pheromone(context, x, y, cellSize, pheromones, maxPheromones){
-        if (this.drawPheromoneCircle){
+    draw_pheromone(context, x, y, cellSize, pheromones, maxPheromones, color = null){
+        if (this.drawPheromoneCircle && pheromones > 0){
             const circleSize = (maxPheromones/CellModel.maxPheromones) * cellSize * 0.4;
             const circleX = x * cellSize + cellSize / 2;
             const circleY = y * cellSize + cellSize / 2;
@@ -38,7 +38,7 @@ class Cell{
             context.closePath();
         } else {
             context.textAlign = "center"
-            context.fillStyle = `rgba( 50, 255, 0, ${pheromones})`;
+            context.fillStyle = color ? color : `rgba(0, 255, 0, ${maxPheromones})`;
             context.font = "10px Arial";
             context.fillText(pheromones.toFixed(2),(x * cellSize) + cellSize/2 , (y * cellSize) + cellSize/2);
         }
