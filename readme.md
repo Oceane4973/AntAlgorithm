@@ -1,7 +1,12 @@
-# Antman
+# AntAlgorythm
+
+## Cahier des charges
+[Lien vers le Cahier des charges](https://github.com/Oceane4973/AntAlgorithm/blob/main/docs/AntAlgorythm.pdf)
+
+## Cahier de recettage
+[Lien vers le cahier de recettage](https://github.com/Oceane4973/AntAlgorithm/blob/main/docs/AntAlgorythm%20-%20Cahier%20de%20recettage.pdf)
 
 ## Démarrer le projet
-
 
 Afin de démarrer le projet, le programme doit être hébergé sur un serveur ou ouvert via certaines extensions comme Live Server pour vs code. Ouvrir directement le fichier `index.html` ne marchera pas car
 les imports ne seront pas fonctionnel.
